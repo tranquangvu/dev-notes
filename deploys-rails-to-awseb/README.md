@@ -155,12 +155,13 @@ If you do not have an AWS account yet, go sign up.
 
     ```
     commands:
-      000_dd:
-        command: echo “noswap”#dd if=/dev/zero of=/swapfile bs=1M count=2048
-      001_mkswap:
-        command: echo “noswap”#mkswap /swapfile
-      002_swapon:
-        command: echo “noswap”#swapon /swapfile
+      01_setup:
+        test: test ! -e /var/swapfile
+        command: |
+          dd if=/dev/zero of=/var/swapfile bs=1M count=2048
+          chmod 600 /var/swapfile
+          mkswap /var/swapfile
+          swapon /var/swapfile
     ```
 
 * **For Rails application use `sidekiq` and `redis`:**
