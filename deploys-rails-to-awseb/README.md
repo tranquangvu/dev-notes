@@ -164,6 +164,19 @@ If you do not have an AWS account yet, go sign up.
           swapon /var/swapfile
     ```
 
+* **Auto add database.yml from database.yml.example:** Add this script to `.ebextensions/sidekiq.config` file
+    ```
+    files:
+      "/opt/elasticbeanstalk/hooks/appdeploy/pre/03_add_database_yml.sh":
+        mode: "000755"
+        owner: root
+        group: root
+        content: |
+          cd /var/app/ondeck/config
+          sudo cp ./database.yml.sample ./database.yml
+    ```
+
+
 * **For Rails application use `sidekiq` and `redis`:**
     * Adding `redis` in aws with `AWS ElastiCache`:
         1. Open the `AWS ElastiCache` console
@@ -280,7 +293,7 @@ If you do not have an AWS account yet, go sign up.
 
         ```
         files:
-          "/opt/elasticbeanstalk/hooks/appdeploy/pre/03_asset_install.sh":
+          "/opt/elasticbeanstalk/hooks/appdeploy/pre/04_asset_install.sh":
             mode: "000755"
             owner: root
             group: root
